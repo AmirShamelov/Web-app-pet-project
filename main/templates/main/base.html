@@ -35,7 +35,8 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item dropdown ">
-                            <a class="nav-link dropdown-toggle text-white" href="#" role{% url "catalog:index" %}s-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle text-white" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
                                 Информация
                             </a>
                             <ul class="dropdown-menu">
@@ -88,9 +89,9 @@
                              height="16">
                     </button>
                     <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
-                        {% tag_categories as categories %}
+                        {% tag_categories as categories  %}
                         {% for category in categories %}
-                        	<li><a class="dropdown-item text-white" href="{% url "catalog:index" %}">{{ category.name }}</a></li>
+                        	<li><a class="dropdown-item text-white" href="{% url "catalog:index" category.slug %}">{{ category.name }}</a></li>
                         {% endfor %}
 
                     </ul>
