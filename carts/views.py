@@ -1,6 +1,6 @@
 from django.http import JsonResponse
-from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
+from django.urls import reverse
 
 from carts.utils import get_user_carts
 from goods.models import Products
@@ -54,9 +54,17 @@ def cart_change(request):
     cart.quantity = quantity
     cart.save()
 
-    cart = get_user_carts(request)
+    user_cart = get_user_carts(request)
+
+    context = {"carts": user_cart}
+
+    referer = request.META.get('HTTP_REFERER')
+
+    if reverse('orders:create_order') in referer:
+        context["order"] = True
+
     cart_items_html = render_to_string(
-        "carts/includes/included_carts.html", {"carts": cart}, request=request)
+        "carts/includes/included_carts.html", context, request=request)
 
     response_data = {
         "message": "Количество изменено",
@@ -73,8 +81,16 @@ def cart_remove(request):
     cart.delete()
 
     user_cart = get_user_carts(request)
+
+    context = {"carts": user_cart}
+
+    referer = request.META.get('HTTP_REFERER')
+
+    if reverse('orders:create_order') in referer:
+        context["order"] = True
+
     cart_items_html = render_to_string(
-        "carts/includes/included_carts.html", {"carts": user_cart}, request=request)
+        "carts/includes/included_carts.html", context, request=request)
 
     response_data = {
         "message": "Товар удален",
