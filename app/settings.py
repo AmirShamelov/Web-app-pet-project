@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
+    'rest_framework',
 
     "debug_toolbar",
 
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
     'users',
     'carts',
     'orders',
+    'api',
 ]
 
 MIDDLEWARE = [
